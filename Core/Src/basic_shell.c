@@ -25,24 +25,8 @@ static char print_buffer[BUFFER_SIZE];
 
 static char uart_read() {
 	char c;
-
-
 	HAL_UART_Receive_IT(&huart1, (uint8_t*)(&c), sizeof(char));
-
-	printf("Je vais Take semaphori\r\n");
 	xSemaphoreTake(semaphori,HAL_MAX_DELAY);
-
-
-	if(xSemaphoreTake(semaphori,HAL_MAX_DELAY)==pdTRUE)
-	{
-		printf("Good Take semaphori\r\n");
-	}
-	else
-	{
-		printf("Error Take semaphori\r\n");
-	}
-
-
 	return c;
 }
 
@@ -52,21 +36,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	BaseType_t higher_priority_task_woken;
 
 	if (huart==&huart1){
-
 		higher_priority_task_woken = pdFALSE;
-		printf("Je vais Give\r\n");
 		xSemaphoreGiveFromISR(semaphori,&higher_priority_task_woken);
-
-
-		if(xSemaphoreGiveFromISR(semaphori,&higher_priority_task_woken)==pdTRUE)
-		{
-			printf("J ai Give\r\n");
-		}
-		else
-		{
-			printf("Error j ai pas Give\r\n");
-		}
-
 	}
 
 	portYIELD_FROM_ISR(higher_priority_task_woken);

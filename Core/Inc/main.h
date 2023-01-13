@@ -155,8 +155,6 @@ void Error_Handler(void);
 #define SAI2_FSA_GPIO_Port GPIOI
 #define LCD_HSYNC_Pin GPIO_PIN_10
 #define LCD_HSYNC_GPIO_Port GPIOI
-#define LED_Pin GPIO_PIN_6
-#define LED_GPIO_Port GPIOI
 #define LCD_B5_Pin GPIO_PIN_4
 #define LCD_B5_GPIO_Port GPIOK
 #define LCD_BL_CTRL_Pin GPIO_PIN_3
@@ -171,8 +169,8 @@ void Error_Handler(void);
 #define SDMMC_D0_GPIO_Port GPIOD
 #define TP3_Pin GPIO_PIN_15
 #define TP3_GPIO_Port GPIOH
-#define ARDUINO_SCK_D13_Pin GPIO_PIN_1
-#define ARDUINO_SCK_D13_GPIO_Port GPIOI
+#define LED_Pin GPIO_PIN_1
+#define LED_GPIO_Port GPIOI
 #define OTG_FS_ID_Pin GPIO_PIN_10
 #define OTG_FS_ID_GPIO_Port GPIOA
 #define RCC_OSC32_IN_Pin GPIO_PIN_14
@@ -386,9 +384,6 @@ void Error_Handler(void);
 
 #define LED_PRIORITY 4
 #define SHELL_PRIORITY 5
-
-
-#define MAX_S_Time 10000
 #define STACK_SIZE 1024
 
 /* USER CODE END Private defines */

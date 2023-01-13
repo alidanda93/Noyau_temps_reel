@@ -45,7 +45,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 BaseType_t xReturned;
-SemaphoreHandle_t semaphori;
+SemaphoreHandle_t semaphori ,semaphore_led;
 
 TaskHandle_t xHandleLED, xHandleSHELL = NULL;
 
@@ -110,15 +110,16 @@ int main(void)
   /* USER CODE BEGIN 2 */
   printf("Init\r\n");
   semaphori = xSemaphoreCreateBinary();
+  semaphore_led = xSemaphoreCreateBinary();
 
 
   xReturned = xTaskCreate(
-    		led, /* Function that implements the task. */
-    		"LED", /* Text name for the task. */
-    		STACK_SIZE, /* Stack size in words, not bytes. */
-    		(void *) LED_DELAY, /* Parameter passed into the task. */
-    		LED_PRIORITY,/* Priority at which the task is created. */
-    		&xHandleLED ); /* Used to pass out the created task's handle. */
+    		led, 			// Function that implements the task.
+    		"LED", 			// Text name for the task.
+    		STACK_SIZE, 	// Stack size in words, not bytes.
+    		(void *)LED_DELAY, // Parameter passed into the task.
+    		LED_PRIORITY,	// Priority at which the task is created.
+    		&xHandleLED ); // Used to pass out the created task's handle.
 
   if(xReturned == pdTRUE)
   {
@@ -154,7 +155,7 @@ int main(void)
 	shell_init();
 	shell_add('f', fonction, "Une fonction inutile");
 	shell_add('a', addition, "addition de deux entiers");
-	shell_add('l', led, "faire clignoter la led a la frequence 1/p");
+	shell_add('l', setLedRate, "faire clignoter la led a la frequence 1/p");
 
 	vTaskStartScheduler();
 

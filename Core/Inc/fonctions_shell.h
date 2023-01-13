@@ -19,7 +19,8 @@
 
 int fonction( int argc, char ** argv);
 int addition( int argc, char ** argv);
-int led( int argc, char ** argv);
+int led();
+int setLedRate( int argc, char ** argv);
 
 
 
