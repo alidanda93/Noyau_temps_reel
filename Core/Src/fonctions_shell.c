@@ -1,42 +1,46 @@
 #include "fonctions_shell.h"
+#include "basic_shell.h"
 
 extern int LED_DELAY;
 extern TaskHandle_t xHandleLED;
+extern char print_buffer[BUFFER_SIZE];
 
-int fonction(h_shell_t * h_shell, int argc, char ** argv)
+
+int fonction(int argc, char ** argv)
 {
-	int size = snprintf (h_shell->print_buffer, BUFFER_SIZE, "Je suis une fonction bidon\r\n");
-	h_shell->drv.transmit(h_shell->print_buffer, size);
+	int size = snprintf (print_buffer, BUFFER_SIZE, "Je suis une fonction bidon\r\n");
+	uart_write(print_buffer, size);
 
 	return 0;
 }
 
 
-int addition(h_shell_t * h_shell, int argc, char ** argv)
+int addition( int argc, char ** argv)
 {
 	if(argc !=3)
 	{
-		int size = snprintf (h_shell->print_buffer, BUFFER_SIZE, "Error y a pas le bon nombre d'argument\r\n");
-		h_shell->drv.transmit(h_shell->print_buffer, size);
+		int size = snprintf (print_buffer, BUFFER_SIZE, "Error y a pas le bon nombre d'argument pour une somme de deux\r\n");
+		uart_write(print_buffer, size);
 		return -1;
 	}
 	else
 	{
 		int a = atoi(argv[1]);
 		int b = atoi(argv[2]);
-		int size = snprintf (h_shell->print_buffer, BUFFER_SIZE, "%d + %d = %d\r\n\r\n", a, b, a+b);
-		h_shell->drv.transmit(h_shell->print_buffer, size);
+		int size = snprintf (print_buffer, BUFFER_SIZE, "%d + %d = %d\r\n\r\n", a, b, a+b);
+		uart_write(print_buffer, size);
 
 	}
 	return 0;
 }
 
-int led(h_shell_t * h_shell, int argc, char ** argv)
+int led( int argc, char ** argv)
 {
+	int state=0;
 	if(argc != 2)
 		{
-			int size = snprintf (h_shell->print_buffer, BUFFER_SIZE, "Error y a pas le bon nombre d'argument\r\n");
-			h_shell->drv.transmit(h_shell->print_buffer, size);
+			int size = snprintf (print_buffer, BUFFER_SIZE, "Error y a pas le bon nombre d'argument pour la LED\r\n");
+			uart_write(print_buffer, size);
 			return -1;
 		}
 	else

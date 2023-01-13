@@ -26,8 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <stdlib.h>
-#include "shell.h"
-#include "drv_uart1.h"
+#include "basic_shell.h"
 
 #include "fonctions_shell.h"
 /* USER CODE END Includes */
@@ -55,7 +54,6 @@ TaskHandle_t xHandleLED, xHandleSHELL = NULL;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-h_shell_t h_shell;
 
 int LED_DELAY = 500;
 /* USER CODE END PV */
@@ -124,11 +122,11 @@ int main(void)
 
   if(xReturned == pdTRUE)
   {
-	  printf("Led task created \r\n");
+	  printf("LED task created \r\n");
   }
   else
   {
-	  printf("Error Led task not created \r\n");
+	  printf("Error LED task not created \r\n");
   }
 
 
@@ -138,7 +136,7 @@ int main(void)
       		shell_run, /* Function that implements the task. */
       		"SHELL", /* Text name for the task. */
       		STACK_SIZE, /* Stack size in words, not bytes. */
-      		(void *) &h_shell, /* Parameter passed into the task. */
+      		(void *) pdTRUE, /* Parameter passed into the task. */
       		SHELL_PRIORITY,/* Priority at which the task is created. */
       		&xHandleSHELL ); /* Used to pass out the created task's handle. */
 
@@ -153,14 +151,10 @@ int main(void)
   }
 
 
-
-  	h_shell.drv.receive = drv_uart1_receive;
-  	h_shell.drv.transmit = drv_uart1_transmit;
-
-	shell_init(&h_shell);
-	shell_add(&h_shell, 'f', fonction, "Une fonction inutile");
-	shell_add(&h_shell, 'a', addition, "addition de deux entiers");
-	shell_add(&h_shell, 'l', led, "faire clignoter la led a la frequence 1/p");
+	shell_init();
+	shell_add('f', fonction, "Une fonction inutile");
+	shell_add('a', addition, "addition de deux entiers");
+	shell_add('l', led, "faire clignoter la led a la frequence 1/p");
 
 	vTaskStartScheduler();
 

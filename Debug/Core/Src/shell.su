@@ -1,5 +1,0 @@
-../Core/Src/shell.c:11:12:sh_help	48	static
-../Core/Src/shell.c:22:6:shell_init	24	static
-../Core/Src/shell.c:36:5:shell_add	24	static
-../Core/Src/shell.c:48:12:shell_exec	72	static
-../Core/Src/shell.c:82:5:shell_run	32	static
