@@ -80,30 +80,30 @@ int setLedRate( int argc, char ** argv)
 	else
 	{
 		LED_DELAY = atoi(argv[1]);
+		vTaskResume(xHandleLED); //reveille la tache si elle est suspended else pass
 	}
 	printf("%d\n\r", LED_DELAY);
 	return 0;
 }
 
 
+
+
 int led()
 {
 	int LED_Delay_local_var;
-
 	while(1)
 	{
 		LED_Delay_local_var = LED_DELAY;
-		//printf("%d\n\r", LED_Delay_local_var);
 		switch(LED_Delay_local_var)
 				{
 					case 0 :
 						HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin,RESET);
-						vTaskSuspend(xHandleLED);
+						vTaskSuspend(xHandleLED); // communiquer PROPREMENT cad suspendre si l 0 == led off
 						break;
 
 
 					default :
-						vTaskResume(xHandleLED);
 						HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 						vTaskDelay(LED_Delay_local_var);
 						break;
@@ -114,3 +114,23 @@ int led()
 
 	return 0;
 }
+
+
+int spammer( int argc, char ** argv)
+{
+	if(argc!=3)
+	{
+		int size = snprintf (print_buffer, BUFFER_SIZE, "Error y a pas le bon nombre d'arguments pour la fonction Spam \r\n");
+		uart_write(print_buffer, size);
+		return -1;
+	}
+	else
+	{
+		int size = snprintf (print_buffer, BUFFER_SIZE, "%s\r\n", argv[1]);
+		for (int i=0; i<atoi(argv[2]);i++) uart_write(print_buffer, size);
+	}
+
+	return 0;
+}
+
+

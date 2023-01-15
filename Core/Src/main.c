@@ -156,6 +156,7 @@ int main(void)
 	shell_add('f', fonction, "Une fonction inutile");
 	shell_add('a', addition, "addition de deux entiers");
 	shell_add('l', setLedRate, "faire clignoter la led a la frequence 1/p");
+	shell_add('s', spammer, "spam un mot le nombre que vous donnez en argument");
 
 	vTaskStartScheduler();
 
