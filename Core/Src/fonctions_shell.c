@@ -1,5 +1,6 @@
 #include "fonctions_shell.h"
 #include "basic_shell.h"
+#include "tim.h"
 
 extern TaskHandle_t xHandleLED;
 extern char print_buffer[BUFFER_SIZE];
@@ -141,4 +142,3 @@ void vApplicationStackOverflowHook( TaskHandle_t xTask, signed char *pcTaskName 
 	Error_Handler();
 
 }
-

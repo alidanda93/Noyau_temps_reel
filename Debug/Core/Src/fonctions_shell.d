@@ -47,7 +47,7 @@ Core/Src/fonctions_shell.o: ../Core/Src/fonctions_shell.c \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- ../Core/Inc/basic_shell.h
+ ../Core/Inc/basic_shell.h ../Core/Inc/tim.h
 ../Core/Inc/fonctions_shell.h:
 ../Core/Inc/basic_shell.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
@@ -99,3 +99,4 @@ Core/Src/fonctions_shell.o: ../Core/Src/fonctions_shell.c \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
 ../Core/Inc/basic_shell.h:
+../Core/Inc/tim.h:
