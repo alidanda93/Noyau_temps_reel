@@ -385,6 +385,9 @@ void Error_Handler(void);
 #define LED_PRIORITY 4
 #define SHELL_PRIORITY 5
 #define STACK_SIZE 1024
+#define BIDON_PRIORITY 1
+#define STACK_SIZE_BIDON 4096
+#define small_STACK_SIZE 10
 
 /* USER CODE END Private defines */
 

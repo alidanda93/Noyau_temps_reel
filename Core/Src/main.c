@@ -48,6 +48,7 @@ BaseType_t xReturned;
 SemaphoreHandle_t semaphori ,semaphore_led;
 
 TaskHandle_t xHandleLED, xHandleSHELL = NULL;
+TaskHandle_t xHandleBidon1 , xHandleBidon2, xHandleBidon3, xHandleBidon4, xHandleBidon5, xHandleBidon6, xHandleBidon7, xHandleBidon8  = NULL;
 
 /* USER CODE END PM */
 
@@ -56,6 +57,9 @@ TaskHandle_t xHandleLED, xHandleSHELL = NULL;
 /* USER CODE BEGIN PV */
 
 int LED_DELAY = 500;
+int BIDON_FLAG = 0;
+int SOV_FLAG = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,7 +78,19 @@ int __io_putchar(int ch)
 	return ch;
 }
 
-
+/*
+ * Code d'une tache bidon
+ */
+void codeTache (void * pvParameters) {
+	int compteur = 0;
+	int duree = (int) pvParameters;
+	char* s = pcTaskGetName(xTaskGetCurrentTaskHandle());
+	while (1) {
+		printf("Je suis la tache %s et je m'endors pour %d periodes\n", s, duree);
+		vTaskDelay(duree);
+		compteur++;
+	}
+}
 
 /* USER CODE END 0 */
 
@@ -112,6 +128,8 @@ int main(void)
   semaphori = xSemaphoreCreateBinary();
   semaphore_led = xSemaphoreCreateBinary();
 
+  if (semaphori == NULL) Error_Handler();
+  if (semaphore_led == NULL) Error_Handler();
 
   xReturned = xTaskCreate(
     		led, 			// Function that implements the task.
@@ -128,9 +146,8 @@ int main(void)
   else
   {
 	  printf("Error LED task not created \r\n");
+	  Error_Handler();
   }
-
-
 
 
   xReturned = xTaskCreate(
@@ -149,8 +166,75 @@ int main(void)
   else
   {
 	  printf("Error Shell task not created \r\n");
+	  Error_Handler();
   }
 
+
+  /*
+   * Debut de fonction bidons à STACK_SIZE_BIDON 4096
+   */
+
+  if (SOV_FLAG){
+	  xReturned = xTaskCreate(
+				codeTache, 			// Function that implements the task.
+				"Bidon1", 			// Text name for the task.
+				small_STACK_SIZE, 	// Stack size in words, not bytes.
+				(void *)NULL, // Parameter passed into the task.
+				BIDON_PRIORITY,	// Priority at which the task is created.
+				&xHandleBidon1 ); // Used to pass out the created task's handle.
+
+	  if(xReturned == pdTRUE)
+	  {
+		  printf("Bidon1 task created \r\n");
+	  }
+	  else
+	  {
+		  printf("Error Bidon1 task not created \r\n");
+		  Error_Handler();
+	  }
+  }
+
+  if (BIDON_FLAG){
+
+
+
+	  xReturned = xTaskCreate(
+				codeTache, 			// Function that implements the task.
+				"Bidon2", 			// Text name for the task.
+				STACK_SIZE, 	// Stack size in words, not bytes.
+				(void *)NULL, // Parameter passed into the task.
+				BIDON_PRIORITY,	// Priority at which the task is created.
+				&xHandleBidon2 ); // Used to pass out the created task's handle.
+
+	  if(xReturned == pdTRUE)
+	  {
+		  printf("Bidon2 task created \r\n");
+	  }
+	  else
+	  {
+		  printf("Error Bidon2 task not created \r\n");
+		  Error_Handler();
+	  }
+
+	  xReturned = xTaskCreate(
+				codeTache, 			// Function that implements the task.
+				"Bidon3", 			// Text name for the task.
+				STACK_SIZE_BIDON, 	// Stack size in words, not bytes.
+				(void *)NULL, // Parameter passed into the task.
+				BIDON_PRIORITY,	// Priority at which the task is created.
+				&xHandleBidon3 ); // Used to pass out the created task's handle.
+
+	  if(xReturned == pdTRUE)
+	  {
+		  printf("Bidon3 task created \r\n");
+	  }
+	  else
+	  {
+		  printf("Error Bidon3 task not created \r\n");
+		  Error_Handler();
+	  }
+
+  }
 
 	shell_init();
 	shell_add('f', fonction, "Une fonction inutile");

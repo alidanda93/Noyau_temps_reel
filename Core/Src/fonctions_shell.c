@@ -133,4 +133,12 @@ int spammer( int argc, char ** argv)
 	return 0;
 }
 
+void vApplicationStackOverflowHook( TaskHandle_t xTask, signed char *pcTaskName ){
+
+	int size = snprintf (print_buffer, BUFFER_SIZE, "STACK OVER FLOWN \r\nDepassement de la pile de %s\r\n",pcTaskName );
+	uart_write(print_buffer, size);
+
+	Error_Handler();
+
+}
 

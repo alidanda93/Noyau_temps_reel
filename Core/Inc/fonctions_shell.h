@@ -23,4 +23,6 @@ int led();
 int setLedRate( int argc, char ** argv);
 int spammer( int argc, char ** argv);
 
+void vApplicationStackOverflowHook( TaskHandle_t xTask, signed char *pcTaskName );
+
 
